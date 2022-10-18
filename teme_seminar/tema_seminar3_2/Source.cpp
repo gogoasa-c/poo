@@ -57,7 +57,7 @@ public:
 	}
 	void setCapitole(int* newCapitole, int newNrCaptiole) {
 		this->nrCapitole = newNrCaptiole;
-		capitole = new int[newNrCaptiole];
+		this->capitole = new int[newNrCaptiole];
 		for (int i = 0; i < newNrCaptiole; i++) {
 			this->capitole[i] = newCapitole[i];
 		}
@@ -86,6 +86,8 @@ public:
 		delete this->capitole;
 	}
 };
+
+
 
 void f() {
 	Carte c1;
@@ -123,21 +125,29 @@ void f() {
 	std::cout << "\n\n";
 	std::cout << c1.getAutor1() << "\n";
 	std::cout << c1.getDenumire() << "\n";
+	std::cout << "------------------\n";
+	c3.getDenumire()[0] = 'x';
+	char* sir = new char[strlen(c3.getDenumire()) + 1];
+	strcpy(sir, c3.getDenumire());
+	sir[0] = 'a';
+	char* sir2 = c3.getDenumire(); //rvalue = right value; lvalue = left value
+	std::cout << c3.getDenumire() << "\n";
 }
 
 int main() {
 	while (true) {
 		int n;
-		std::cout << "1. New Book\n2. Show\n3. Exit\n";
+		std::cout << "1. Show\n2. Exit\n";
 		std::cin >> n;
 		switch (n) {
 		case 1:
-			break;
-		case 2:
 			f();
 			break;
-		case 3:
+		case 2:
 			return 0;
+		default:
+			std::cout << "Invalid.";
 		}
 	}
+	return 0;
 }
