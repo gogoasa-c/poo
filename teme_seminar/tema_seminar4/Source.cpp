@@ -31,8 +31,16 @@ public:
 		for (int i = 0; i < this->nrCapitole; i++) {
 			this->capitole[i] = capitole[i];
 		}
+		/* sau
+		if (nrCapitole > 0 && capitole != nullptr) {
+			this->nrCapitole = nrCapitole;
+			this->capitole = new string[nrCapitole];
+			for (int i = 0; i < nrCapitole; i++) {
+				this->capitole[i] = capitole[i];
+			}
+		}*/
 	}
-
+	
 	Carte(const Carte& c) {
 		this->titlu = c.titlu;
 		this->autor = c.autor;
