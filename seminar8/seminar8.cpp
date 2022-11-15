@@ -2,6 +2,17 @@
 #include<fstream>
 using namespace std;
 
+//alternativ la exceptii
+class CustomExecption {
+	string mesaj;
+public:
+	CustomExecption(string mesaj) {
+		this->mesaj = mesaj;
+	}
+	string getMesaj() {
+		return this->mesaj;
+	}
+};
 
 //fisiere text, relatia has a = compunere, try-catch
 class Cadou {
@@ -32,6 +43,14 @@ public:
 		this->pret = c.pret;
 		return *this;
 	}
+
+	void setPret(float pret) {
+		if (pret < 0) {
+			throw new exception("Pretul este invalid!"); //arunca un pointer la exception
+		}
+		this->pret = pret;
+	}
+
 
 	friend ostream& operator<<(ostream& out, const Cadou& c)
 	{
@@ -173,6 +192,17 @@ int main()
 	Cadou c4;
 	f >> c4;
 	cout << "\n" << c4 << "\n";
+
+
+	try{
+		c1.setPret(-120);
+		cout << c1;
+	}
+	catch (exception *e) {
+		cout << e->what();
+	}
+	
+
 
 	return 0;
 }
