@@ -236,8 +236,8 @@ int main()
 	a = !b; //! nu modifica b
 	cout << "\na: " << a << "\nb: " << b;
 
-	p1 = !p3;
-	cout << "\np1: " << p1 << "\np3:" << p3;
+	bool esteVid = !p3;
+	cout << "\nVid? : " << esteVid << "\np3:" << p3;
 
 	return 0;
 }
