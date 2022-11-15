@@ -160,7 +160,7 @@ public:
 //clasa WishList3 = vector dinamic de Cadou
 //clasa WishList4 = vector static de Cadou
 //constructori de toate tipurilor, <<, >> pt ostream istream si ofstream ifstream si tot ce am facut pe aici + 2 rapoarte text = probleme simple pe baza datelor de aici
-
+//optional: istream overloading care poate sa citeasca un const; hint: pointer
 class WishList5 { 
 	string detinator;
 	Cadou* cadouSpecial;
