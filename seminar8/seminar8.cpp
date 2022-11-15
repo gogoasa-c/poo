@@ -38,11 +38,25 @@ public:
 		out << "\nDenumire: " << c.denumire << ", pret: " << c.pret;
 		return out;
 	}
+
+	friend ofstream& operator<<(ofstream& out, const Cadou& c)
+	{
+		out << c.denumire << "\n" << c.pret;
+		return out;
+	}
+
 	friend istream& operator>>(istream& in, Cadou& c)
 	{
 		cout << "Introduceti denumire: ";
 		in >> c.denumire;
 		cout << "Introduceti pret: ";
+		in >> c.pret;
+		return in;
+	}
+
+	friend ifstream& operator>>(ifstream& in, Cadou& c)
+	{
+		in >> c.denumire;
 		in >> c.pret;
 		return in;
 	}
@@ -123,6 +137,18 @@ public:
 	}
 };
 
+//tema pentru peste 2 saptamani: clasa WishList2 = vector static de Cadou* 
+//clasa WishList3 = vector dinamic de Cadou
+//clasa WishList4 = vector static de Cadou
+//constructori de toate tipurilor, <<, >> pt ostream istream si ofstream ifstream si tot ce am facut pe aici + 2 rapoarte text = probleme simple pe baza datelor de aici
+
+class WishList5 { 
+	string detinator;
+	Cadou* cadouSpecial;
+	int nrPrieteni;
+	Cadou*** listaCadouri; //matrice de pointeri la cadou de tip zig zag = differing lengths of columns
+	int* nrCadouriPrieteni;
+};
 
 int main()
 {
@@ -138,6 +164,15 @@ int main()
 	cout << w3 << "\n";
 	w1 = w3;
 	cout << w1 << "\n";
+
+	ofstream g("fisier.txt");
+	g << c1; // ofstream is a ostream
+	g.close();
+
+	ifstream f("fisier.txt");
+	Cadou c4;
+	f >> c4;
+	cout << "\n" << c4 << "\n";
 
 	return 0;
 }
