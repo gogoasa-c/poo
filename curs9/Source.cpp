@@ -36,6 +36,7 @@ public:
 
 };
 
+
 int main() {
 	Pers p1(101, "Ion Popescu", 2500.0);
 	cout << p1;
