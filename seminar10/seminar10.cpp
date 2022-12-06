@@ -2,13 +2,15 @@
 #include<string>
 using namespace std;
 
-//TEMA: De implementat o clasa de baza si 2 derivate. De implementat "must-ul" in clase.
-//De adaugat o metoda virtuala si de exemplificat virtualizarea in main pe baza unui vector de pointeri la clasa de baza
-//TEMA OPTIONALA: De virtualizat conceptul de cout.
+//tema: 
+//alegeti o clasa de baza cu 2 derivate - animal + caine, pisica
+//alocare dinamica in clasa de baza si in una din cele 2 derivate
+//implementare de istream
+
 
 enum Grad
 {
-	ASIST = 1, 
+	ASIST = 1,
 	LECT = 2, 
 	CONF = 3, 
 	PROF = 4
@@ -19,9 +21,9 @@ class Angajat
 private:
 	string nume = "Anonim";
 protected:
-	int vechime = 0;
-	int nrLocuriMunca = 0;
-	string* locuriMunca = NULL;
+	int vechime = 0; // ani
+	int nrLocuriMunca = 0; // anterioare
+	string* locuriMunca = NULL; // unde a lucrat 
 	float salariu = 0;
 
 public:
@@ -109,79 +111,66 @@ public:
 	}
 };
 
-class Profesor : public Angajat
-{
-	Grad gradDidactic = Grad::ASIST;
-	int nrOreSuplimentare = 0;
 
+//relatie is a
+class Profesor: public Angajat {
+	Grad gradDidactic = Grad::ASIST;
+	int nrStudentiCoordonati = 0;
 public:
-	Profesor()
-	{
+	Profesor(): Angajat() {
 		cout << "\nCONSTRUCTOR FARA PARAM PROFESOR";
 	}
 
-	Profesor(string n, int v, int nrL, string* lM, float s, Grad g, int nrO) :Angajat(n, v, nrL, lM, s)
-	{
+	Profesor(string n, int v, int nrL, string* l, float s, Grad gradDidactic, int nrStudentiCoordonati): Angajat(n, v, nrL, l, s) {
 		cout << "\nCONSTRUCTOR CU PARAM PROFESOR";
-		this->gradDidactic = g;
-		this->nrOreSuplimentare = nrO;
+		this->gradDidactic = gradDidactic;
+		this->nrStudentiCoordonati = nrStudentiCoordonati;
 	}
 
-	Profesor(const Profesor& p) :Angajat(p)//apel copy constr din clasa Angajat + upcast de la Profesor la Angajat
-	{
+	Profesor(Angajat a, Grad g, int nrStud): Angajat(a) {
+		cout << "\nCONSTRUCTOR CU PARAM 2 PROFESOR";
+		this->gradDidactic = gradDidactic;
+		this->nrStudentiCoordonati = nrStudentiCoordonati;
+	}
+
+	Profesor(const Profesor& p): Angajat(p) {
 		cout << "\nCONSTRUCTOR COPIERE PROFESOR";
 		this->gradDidactic = p.gradDidactic;
-		this->nrOreSuplimentare = p.nrOreSuplimentare;
+		this->nrStudentiCoordonati = p.nrStudentiCoordonati;
 	}
 
-	Profesor& operator=(const Profesor& p)
-	{
-		Angajat::operator=(p);
+	Profesor& operator=(const Profesor& p) {
 		cout << "\nOPERATOR = PROFESOR";
+		if (this == &p) {
+			return *this;
+		}
+		//(Angajat)(*this) = (Angajat)p;
+		/*this->*/Angajat::operator=(p);
 		this->gradDidactic = p.gradDidactic;
-		this->nrOreSuplimentare = p.nrOreSuplimentare;
+		this->nrStudentiCoordonati = p.nrStudentiCoordonati;
 		return *this;
 	}
 
-	friend ostream& operator<<(ostream& out, const Profesor& p)
-	{
+	friend ostream& operator<<(ostream& out, const Profesor& p) {
 		out << (Angajat)p;
 		out << "\nGrad didactic: " << p.gradDidactic;
-		out << "\nNr ore suplimentare: " << p.nrOreSuplimentare;
+		out << "\nNr. Studenti Coordonati: " << p.nrStudentiCoordonati;
 		return out;
 	}
 
-	~Profesor()
-	{
+	~Profesor() {
 		cout << "\nDESTRUCTOR PROFESOR";
-	}
-
-	float calculSalariu()
-	{
-		return this->salariu + this->nrOreSuplimentare * 15;
 	}
 };
 
 int main()
 {
 	Profesor p1;
-	string lista[] = { "CNCV","ASE" };
-	Angajat a("Costelus", 10, 2, lista, 5000);
-	Profesor p2("Gigel", 5, 2, lista, 4000, Grad::LECT, 15);
-	Profesor p3 = p2;
-
-	cout << "\nTESTARE METODA DE CALCUL SALARIU:";
-	cout << "\n" << a.calculSalariu();
-	cout << "\n" << p2.calculSalariu();
-
-	//upcast pe obiecte
-	Angajat a2;
-	a2 = p3;
-	cout << "\nSalariu angajat fost profesor prin upcast: " << a2.calculSalariu();
-	//calcul salarii angajati ASE
-	Angajat listaAngajati[] = { a,p2,p3 };
-
-
-
+	Profesor p2("Gigel", 10, 0, nullptr, 4000.50, Grad::ASIST, 4);
+	Angajat a("Costel", 5, 0, nullptr, 5000.);
+	Profesor p3(a, Grad::ASIST, 0);
+	Profesor p4 = p3;
+	p1 = p4;
+	cout << p1;
 	return 0;
 }
